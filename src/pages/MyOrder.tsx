@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import OrderCard from "../components/OrderCard";
+import MyOrderCard from "../components/MyOrderCard";
 import Container from "../layouts/Container";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 type MyOrderType = {
   id: string;
@@ -22,13 +23,12 @@ type MyOrderType = {
 
 const MyOrder = () => {
   const [orderData, setOrderData] = useState<MyOrderType[]>();
+  const { user } = useAuth();
 
   useEffect(() => {
     const getMyOrders = async () => {
       try {
-        const res = await axios.get(
-          "/api/myorder/2eeba757-e5ac-11ed-bae7-0242ac120003"
-        );
+        const res = await axios.get(`/api/myorder/${user?.id}`);
         if (res.status === 200) {
           setOrderData(res.data);
         }
@@ -50,7 +50,7 @@ const MyOrder = () => {
       <div className="flex flex-wrap gap-8 justify-center w-full h-full overflow-auto pb-20">
         {orderData?.map((order: MyOrderType) => {
           return (
-            <OrderCard
+            <MyOrderCard
               key={order.id}
               id={order.id}
               restaurant={order.restaurant}
@@ -58,12 +58,11 @@ const MyOrder = () => {
               limit={order.limit}
               count={order.count}
               status={order.status}
-              userId={order.user.id}
+              user={order.user}
             />
           );
         })}
       </div>
-      
     </Container>
   );
 };

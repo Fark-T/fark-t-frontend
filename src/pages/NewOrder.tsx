@@ -2,6 +2,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useAuth } from "../context/AuthContext";
 
 const schema = yup.object({
   userID: yup.string(),
@@ -11,22 +12,20 @@ const schema = yup.object({
 });
 type FormData = yup.InferType<typeof schema>;
 const NewOrder = () => {
-  const {
-    register,
-    handleSubmit,
-  } = useForm<FormData>({
+  const { user } = useAuth();
+  const { register, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
   const onSubmit = async (data: FormData) => {
-    data.userID = "2eeba757-e5ac-11ed-bae7-0242ac120003";
+    data.userID = user?.id;
     try {
-      const res = await axios.post("http://localhost:5196/api/order/create", data);
+      const res = await axios.post("/api/order/create", data);
       console.log(res);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
-  
+
   return (
     <div className="pt-40 flex justify-center">
       <div className="w-[40rem] h-[30rem] md:m-0 m-5 shadow-xl flex flex-col items-center  rounded-lg">

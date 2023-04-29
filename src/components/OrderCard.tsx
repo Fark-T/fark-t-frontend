@@ -1,5 +1,21 @@
 import { useState } from "react";
 import { FaHamburger } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
+
+const schema = yup
+  .object({
+    menu: yup.string().required(),
+    location: yup.string().required(),
+    userID: yup.string(),
+    orderID: yup.string(),
+  })
+  .required();
+
+type FormData = yup.InferType<typeof schema>;
 type MyOrderType = {
   id: string;
   restaurant: string;
@@ -9,8 +25,21 @@ type MyOrderType = {
   status: boolean;
   userId: string;
 };
-
 const OrderCard = (props: MyOrderType) => {
+  const { user } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = async (data: FormData) => {
+    data.userID = user?.id;
+    data.orderID = props.id;
+    const res = await axios.post("/api/fark/create", data);
+    console.log(res);
+  };
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -42,23 +71,26 @@ const OrderCard = (props: MyOrderType) => {
 
       <div className={`modal ${isOpen ? "modal-open" : ""}`}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
-            Congratulations random Internet user!
-          </h3>
-          <p className="py-4">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
-          </p>
-          <div className="modal-action">
-            <button
-              className="btn btn-error"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              close
-            </button>
-          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="menu">Menu:</label>
+            <input type="text" id="menu" {...register("menu")} />
+            <label htmlFor="location">Location:</label>
+            <input type="text" id="location" {...register("location")} />
+
+            <div className="modal-action">
+              <button className="btn btn-success" type="submit">
+                fark
+              </button>
+              <button
+                className="btn btn-error"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+              >
+                close
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>

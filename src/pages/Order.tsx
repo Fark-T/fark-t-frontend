@@ -24,9 +24,7 @@ const Order = () => {
   useEffect(() => {
     const getMyOrders = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:5196/api/order/2eeba757-e5ac-11ed-bae7-0242ac120003"
-        );
+        const res = await axios.get("/api/order");
         if (res.status === 200) {
           setorderData(res.data);
         }
@@ -42,24 +40,26 @@ const Order = () => {
     };
     getMyOrders();
   }, []);
- 
+
   return (
     <Container>
-      {orderData?.map((order: MyOrderType) => {
-        return (
-          <Fragment key={order.id}>
-            <OrderCard
-              id={order.id}
-              restaurant={order.restaurant}
-              category={order.category}
-              limit={order.limit}
-              count={order.count}
-              status={order.status}
-              userId={order.user.id}
-            />
-          </Fragment>
-        );
-      })}
+      <div className="flex justify-center md:flex-row flex-col space-y-10 md:space-y-0 md:space-x-10 space-x-0 flex-wrap">
+        {orderData?.map((order: MyOrderType) => {
+          return (
+            <Fragment key={order.id}>
+              <OrderCard
+                id={order.id}
+                restaurant={order.restaurant}
+                category={order.category}
+                limit={order.limit}
+                count={order.count}
+                status={order.status}
+                userId={order.user.id}
+              />
+            </Fragment>
+          );
+        })}
+      </div>
     </Container>
   );
 };
