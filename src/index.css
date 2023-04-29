@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  /* @apply bg-[#f3f5f0]; */
+}
+.bgLogin {
+    background-image: url("https://cdn.pixabay.com/photo/2018/05/15/09/01/foodora-3402507_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+* {
+  @apply transition-all;
+}
