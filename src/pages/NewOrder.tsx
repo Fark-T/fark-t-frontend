@@ -35,31 +35,34 @@ const NewOrder = () => {
         <div className="flex flex-col justify-center h-full">
           <form className="space-y-2 pb-8" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col">
-              <label className="font-medium">Resteruant</label>
+              <label className="font-medium">Restaurant</label>
               <input
                 type="text"
                 id="restaurant"
                 {...register("restaurant")}
-                placeholder="type"
+                placeholder="Restaurant"
                 className="rounded-md border-2 md:w-[420px] w-72 h-10 placeholder-shown:border-[#EEF2E6] placeholder: ps-2"
               />
             </div>
             <div className="flex space-x-3 pb-5">
-              <div className="flex flex-col">
+              <div className="flex flex-col w-full">
                 <label htmlFor="category" className="font-medium">
                   Categories
                 </label>
-                <input
-                  type="text"
+                <select
                   {...register("category")}
                   id="category"
-                  placeholder="type"
-                  className="rounded-md border-2 md:w-[21rem] w-34 h-10 placeholder-shown:border-[#EEF2E6] placeholder: ps-2"
-                />
+                  className="border-2 rounded-md h-10 text-center"
+                >
+                  <option value="" disabled selected>Select Category</option>
+                  <option value="1">Food</option>
+                  <option value="2">Drink</option>
+                
+                </select>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col ">
                 <label htmlFor="limit" className="font-medium">
-                  Fark Limit
+                  Limit
                 </label>
                 <select
                   {...register("limit")}
