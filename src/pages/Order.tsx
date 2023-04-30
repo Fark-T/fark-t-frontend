@@ -43,7 +43,7 @@ const Order = () => {
 
   return (
     <Container>
-      <div className="flex justify-center md:flex-row flex-col space-y-10 md:space-y-0 md:space-x-10 space-x-0 flex-wrap">
+      <div className="flex justify-center md:flex-row flex-col space-y-10 md:space-y-0 flex-wrap md:gap-10 ">
         {orderData?.map((order: MyOrderType) => {
           return (
             <Fragment key={order.id}>

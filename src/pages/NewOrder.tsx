@@ -55,8 +55,8 @@ const NewOrder = () => {
                   className="border-2 rounded-md h-10 text-center"
                 >
                   <option value="" disabled selected>Select Category</option>
-                  <option value="1">Food</option>
-                  <option value="2">Drink</option>
+                  <option value="Food">Food</option>
+                  <option value="Drink">Drink</option>
                 
                 </select>
               </div>

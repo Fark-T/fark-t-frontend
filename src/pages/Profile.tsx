@@ -65,7 +65,12 @@ const MyProfile = () => {
 
 
 
-
+                    <button
+                        type="submit"
+                        className="bg-[#D6CDA4] md:w-[300px] w-40 h-10 rounded-md mt-5 mb-2 font-bold text-white hover:bg-[#8d8d8d] transition duration-300"
+                    >
+                        Edit Profile
+                    </button>
 
                 </div>
             </div>

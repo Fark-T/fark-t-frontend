@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -17,13 +18,16 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 const Register = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
   const onSubmit = async (data: FormData) => {
+
     try {
       const res = await axios.post("/api/Auth/register", data);
       console.log(res);
+      navigate("/login", { replace: true });
     } catch (error) {
       console.log(error)
     }

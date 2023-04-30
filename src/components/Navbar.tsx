@@ -25,8 +25,8 @@ const Navbar = () => {
     });
   });
   return (
-    <nav className="w-full fixed top-0 left-0 shadow-lg z-50">
-      <div className="flex justify-between items-center md:px-20 px-5 py-6">
+    <nav className="w-full fixed top-0 left-0 shadow-lg z-50 bg-white">
+      <div className="flex justify-between items-center md:px-20 px-5 md:py-0 py-2">
         <div className="flex justify-center items-center space-x-1">
           <span className="text-4xl">
             <IoFastFoodOutline />

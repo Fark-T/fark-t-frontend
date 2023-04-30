@@ -47,7 +47,7 @@ const OrderCard = (props: MyOrderType) => {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className="relative md:w-1/4 w-full h-48 shadow-lg rounded-3xl bg-gradient-to-r from-green-300 to-teal-400 flex flex-col"
+        className="relative md:w-1/4 w-full h-48 shadow-lg rounded-3xl bg-gradient-to-r from-green-300 to-teal-400"
       >
         <div className="w-14 h-14 rounded-full absolute left-3 top-4 z-10 bg-indigo-400 flex justify-center items-center border-2 border-white">
           <FaHamburger className="w-6 h-6" />
