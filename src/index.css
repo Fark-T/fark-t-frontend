@@ -19,3 +19,8 @@ body,
 * {
   @apply transition-all;
 }
+
+.btn {
+  @apply min-h-0;
+  @apply text-xs;
+}

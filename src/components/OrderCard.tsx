@@ -37,8 +37,8 @@ const OrderCard = (props: MyOrderType) => {
   const onSubmit = async (data: FormData) => {
     data.userID = user?.id;
     data.orderID = props.id;
-    const res = await axios.post("/api/fark/create", data);
-    console.log(res);
+    await axios.post("/api/fark/create", data);
+    setIsOpen(!isOpen);
   };
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -71,26 +71,55 @@ const OrderCard = (props: MyOrderType) => {
 
       <div className={`modal ${isOpen ? "modal-open" : ""}`}>
         <div className="modal-box">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="menu">Menu:</label>
-            <input type="text" id="menu" {...register("menu")} />
-            <label htmlFor="location">Location:</label>
-            <input type="text" id="location" {...register("location")} />
-
-            <div className="modal-action">
-              <button className="btn btn-success" type="submit">
-                fark
-              </button>
-              <button
-                className="btn btn-error"
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
-              >
-                close
-              </button>
-            </div>
-          </form>
+          <div className="modal-action flex flex-col">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col w-full"
+            >
+              <div className="shadow-lg p-3 bg-slate-200 rounded-xl">
+                <div className="flex h-10 items-center p-2 space-x-2">
+                  <label htmlFor="menu" className="font-bold">
+                    Menu
+                  </label>
+                  <input
+                    type="text"
+                    id="menu"
+                    {...register("menu")}
+                    className="w-full placeholder-shown:border-[#EEF2E6] placeholder: ps-2 rounded-md"
+                    placeholder="Enter your menu"
+                  />
+                </div>
+                <div className="flex h-10 items-center p-2 space-x-2">
+                  <label htmlFor="location" className="font-bold">
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    id="location"
+                    {...register("location")}
+                    className="w-full placeholder-shown:border-[#EEF2E6] placeholder: ps-2 rounded-md"
+                    placeholder="Enter your location"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between pt-5">
+                <button
+                  className="btn btn-success md:w-40 w-20 h-10"
+                  type="submit"
+                >
+                  fark
+                </button>
+                <button
+                  className="absolute btn btn-error right-8 md:w-40 w-20 h-10"
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                >
+                  close
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>
