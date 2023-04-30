@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   userID: yup.string(),
@@ -16,11 +17,12 @@ const NewOrder = () => {
   const { register, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+  const navigate = useNavigate();
   const onSubmit = async (data: FormData) => {
     data.userID = user?.id;
     try {
-      const res = await axios.post("/api/order/create", data);
-      console.log(res);
+      await axios.post("/api/order/create", data);
+      navigate("/myorder", {replace:true})
     } catch (error) {
       console.log(error);
     }

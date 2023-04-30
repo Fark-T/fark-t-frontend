@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
-
 const schema = yup
   .object({
     menu: yup.string().required(),
@@ -39,6 +38,7 @@ const OrderCard = (props: MyOrderType) => {
     data.orderID = props.id;
     await axios.post("/api/fark/create", data);
     setIsOpen(!isOpen);
+    window.location.reload()
   };
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -118,6 +118,7 @@ const OrderCard = (props: MyOrderType) => {
                   fark
                 </button>
                 <button
+                  type="button"
                   className="absolute btn btn-error right-8 md:w-40 w-20 h-10"
                   onClick={() => {
                     setIsOpen(!isOpen);
