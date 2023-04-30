@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaHamburger, FaKaaba } from "react-icons/fa";
+import { FaHamburger } from "react-icons/fa";
 import FarkList from "./FarkList";
 
 type MyOrderType = {

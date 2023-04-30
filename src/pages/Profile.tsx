@@ -39,7 +39,6 @@ const MyProfile = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });

@@ -29,7 +29,6 @@ const OrderCard = (props: MyOrderType) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
