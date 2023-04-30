@@ -65,7 +65,18 @@ const MyOrderCard = (props: MyOrderType) => {
     };
     fetch();
   }, [props.refreshKey]);
-
+  const handelFinish = async (data: MyOrderType) => {
+    try {
+      await axios.put(`/api/order/update/status`, {
+        id: data.id,
+        status: false,
+        userID: data.user.id,
+      });
+        window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div
@@ -124,16 +135,26 @@ const MyOrderCard = (props: MyOrderType) => {
                   );
                 })}
               </div>
-
-              <button
-                className="btn md:w-20 h-10 w-[70px] md:right-3 right-4 bg-red-500"
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
-                type="submit"
-              >
-                close
-              </button>
+              <div className="flex justify-between">
+                <button
+                  type="button"
+                  className="btn btn-success md:w-20 w-[70px] h-10"
+                  onClick={() => {
+                    handelFinish(props);
+                  }}
+                >
+                  Finish
+                </button>
+                <button
+                  className="btn absolute md:w-20 h-10 w-[70px] right-9 btn-error"
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                  type="submit"
+                >
+                  close
+                </button>
+              </div>
             </div>
           )}
         </div>

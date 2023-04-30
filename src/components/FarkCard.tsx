@@ -12,7 +12,7 @@ type MyFarkType = {
 const FarkCard = (props: MyFarkType) => {
   const handleCancel = async () => {
     await axios.delete(`/api/fark/${props.id}`);
-    window.location.reload();
+      window.location.reload();
   };
 
   return (
