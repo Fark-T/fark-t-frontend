@@ -8,7 +8,20 @@ import {
 import Container from "../layouts/Container";
 import { IconContext } from "react-icons";
 import axios from "axios";
-import Swal from 'sweetalert2';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useAuth } from "../context/AuthContext";
+
+const schema = yup
+  .object({
+    fname: yup.string().required(),
+    lname: yup.string().required(),
+    phone: yup.string(),
+    password: yup.string(),
+  })
+  .required();
+type FormData = yup.InferType<typeof schema>;
 
 type MyProfileType = {
   id: string;
@@ -22,6 +35,24 @@ type MyProfileType = {
 const MyProfile = () => {
   const [profileData, setProfileData] = useState<MyProfileType>();
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = async (data: FormData) => {
+    try {
+      const res = await axios.put(`/api/Users/${user?.id}`, data);
+      console.log(res);
+      window.location.reload()
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     const getMyProfile = async () => {
       try {
@@ -89,37 +120,64 @@ const MyProfile = () => {
           <div className={`modal ${isOpen ? "modal-open" : ""}`}>
             <div className="modal-box">
               <div className="modal-action flex flex-col">
-                <form className="flex flex-col w-full">
-                  <div className="shadow-lg p-3 bg-slate-200 rounded-xl">
-                    <div className="flex h-10 items-center p-2 space-x-2">
-                      <label htmlFor="menu" className="font-bold">
-                        Menu
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
+                  <div className="pb-10 shadow-lg p-3 bg-slate-200 rounded-xl space-y-5">
+                    <div className="flex flex-col h-10 p-2">
+                      <label htmlFor="fname" className="font-bold">
+                        First name
                       </label>
                       <input
                         type="text"
-                        id="menu"
+                        id="fname"
+                        {...register("fname")}
                         className="w-full placeholder-shown:border-[#EEF2E6] placeholder: ps-2 rounded-md"
-                        placeholder="Enter your menu"
+                        placeholder="Enter your first name"
                       />
                     </div>
-                    <div className="flex h-10 items-center p-2 space-x-2">
-                      <label htmlFor="location" className="font-bold">
-                        Location
+                    <div className="flex flex-col h-10 p-2">
+                      <label htmlFor="lname" className="font-bold">
+                        Last name
                       </label>
                       <input
                         type="text"
-                        id="location"
+                        id="lname"
+                        {...register("lname")}
                         className="w-full placeholder-shown:border-[#EEF2E6] placeholder: ps-2 rounded-md"
-                        placeholder="Enter your location"
+                        placeholder="Enter your last name"
+                      />
+                    </div>
+                    <div className="flex flex-col h-10 p-2">
+                      <label htmlFor="phone" className="font-bold">
+                        Phone number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        pattern="[0-9]{10}"
+                        {...register("phone")}
+                        className="w-full placeholder-shown:border-[#EEF2E6] placeholder: ps-2 rounded-md"
+                        placeholder="1234567890"
+                      />
+                    </div>
+                    <div className="flex flex-col h-10 p-2">
+                      <label htmlFor="password" className="font-bold">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        id="password"
+                        {...register("password")}
+                        className="w-full placeholder-shown:border-[#EEF2E6] placeholder: ps-2 rounded-md"
+                        placeholder="**********"
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between pt-5">
+                  <div className="flex flex-col  justify-between pt-5">
                     <button
                       className="btn btn-success md:w-40 w-20 h-10"
                       type="submit"
                     >
-                      fark
+                      apply
                     </button>
                     <button
                       type="button"
@@ -128,7 +186,7 @@ const MyProfile = () => {
                         setIsOpen(!isOpen);
                       }}
                     >
-                      close
+                      cancel
                     </button>
                   </div>
                 </form>
