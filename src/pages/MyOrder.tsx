@@ -48,7 +48,7 @@ const MyOrder = () => {
 
   return (
     <Container>
-      <div className="flex flex-wrap gap-8 justify-center w-full h-full overflow-auto pb-20">
+      <div className="flex flex-wrap gap-8 justify-center w-full overflow-auto pb-20">
         {orderData?.map((order: MyOrderType) => {
           return (
             <MyOrderCard
