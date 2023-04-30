@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 export type Login = {
   username: string;
@@ -14,7 +15,14 @@ export const login = async ({ username, password }: Login) => {
       const win: Window = window;
       win.location = "/order";
     }
-  } catch (error) {}
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Invalid username or password!',
+    });
+
+  }
 };
 
 export const logout = async () => {

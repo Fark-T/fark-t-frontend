@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+
 const schema = yup
   .object({
     username: yup.string().required(),
@@ -23,6 +24,7 @@ const Login = () => {
   });
   const onSubmit = async (data: FormData) => {
     await login({ ...data });
+  
   };
   return (
     <div className="w-screen min-h-screen bg-[#1C6758] flex flex-col justify-center items-center">

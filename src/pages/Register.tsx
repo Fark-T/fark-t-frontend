@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const schema = yup
   .object({
@@ -30,6 +31,11 @@ const Register = () => {
       navigate("/login", { replace: true });
     } catch (error) {
       console.log(error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Username Already exists!',
+      });
     }
   }
 
