@@ -11,7 +11,6 @@ import axios from "axios";
 import ProtectRoute from "./components/ProtectRoute";
 import Navbar from "./components/Navbar";
 import { useAuth } from "./context/AuthContext";
-import Home from "./pages/Home";
 axios.defaults.baseURL = import.meta.env.VITE_APP_API;
 function App() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -23,7 +22,7 @@ function App() {
           path="/"
           element={
             <ProtectRoute>
-              <Home />
+              <Order />
             </ProtectRoute>
           }
         />

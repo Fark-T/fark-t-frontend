@@ -58,18 +58,26 @@ const OrderCard = (props: MyOrderType) => {
             {props.category}
           </div>
           <hr className="border-[1.5px]"></hr>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div className="font-medium">
               Amount : {props.count}/{props.limit}
             </div>
-            <div className="font-medium">
-              {props.status ? "processing" : "waiting"}
-            </div>
+            {props.count == props.limit ? (
+              <div className="font-bold bg-red-400 rounded-md w-14 h-8 flex justify-center items-center text-white">
+                Full
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
 
-      <div className={`modal ${isOpen ? "modal-open" : ""}`}>
+      <div
+        className={`modal ${
+          isOpen && props.count < props.limit ? "modal-open" : ""
+        }`}
+      >
         <div className="modal-box">
           <div className="modal-action flex flex-col">
             <form

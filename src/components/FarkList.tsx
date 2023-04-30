@@ -4,6 +4,7 @@ import { useState } from "react";
 type Props = {
   id: string;
   menu: string;
+  status: boolean;
   location: string;
   phone: string;
   refreshKey: number;
@@ -11,10 +12,10 @@ type Props = {
 };
 
 const FarkList = (props: Props) => {
-  const [isAccept, setIsAccept] = useState(false);
   const handleAccept = async () => {
     try {
       await axios.put(`/api/fark/status/${props.id}`);
+      props.setRefreshKey(props.refreshKey + 1);
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +45,7 @@ const FarkList = (props: Props) => {
           <div className="font-bold">Phone</div>
           <div>{props.phone}</div>
         </div>
-        {isAccept ? (
+        {props.status ? (
           <></>
         ) : (
           <div className="w-full flex relative justify-between pt-2">
@@ -53,7 +54,6 @@ const FarkList = (props: Props) => {
               type="submit"
               onClick={() => {
                 handleAccept();
-                setIsAccept(!isAccept);
               }}
             >
               accept

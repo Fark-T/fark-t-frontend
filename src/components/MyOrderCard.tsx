@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaHamburger } from "react-icons/fa";
+import { FaHamburger, FaKaaba } from "react-icons/fa";
 import FarkList from "./FarkList";
 
 type MyOrderType = {
@@ -83,45 +83,59 @@ const MyOrderCard = (props: MyOrderType) => {
             {props.category}
           </div>
           <hr className="border-[1.5px]"></hr>
-          <div className="flex justify-between">
-            <div className="font-medium">
-              Amount : {props.count}/{props.limit}
-            </div>
-            <div className="font-medium">
-              {props.status ? "processing" : "waiting"}
-            </div>
+
+          <div className="font-medium">
+            Amount : {props.count}/{props.limit}
           </div>
         </div>
       </div>
 
       <div className={`modal ${isOpen ? "modal-open" : ""}`}>
         <div className="modal-box">
-          <div className="modal-action flex flex-col space-y-5">
-            <div className="flex flex-col space-y-4">
-              {farkData?.map((fark) => {
-                return (
-                  <FarkList
-                    id={fark.id}
-                    menu={fark.menu}
-                    location={fark.location}
-                    phone={fark.user.phone}
-                    refreshKey={props.refreshKey}
-                    setRefreshKey={props.setRefreshKey}
-                  />
-                );
-              })}
+          {props.count == 0 ? (
+            <div className="flex flex-col justify-center items-center space-y-10">
+              <div className="text-2xl">Haven't get an Order Yet</div>
+              <div>
+                <button
+                  className="btn md:w-20 h-10 w-[70px] md:right-3 right-4 bg-red-500"
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                  type="submit"
+                >
+                  close
+                </button>
+              </div>
             </div>
+          ) : (
+            <div className="modal-action flex flex-col space-y-5">
+              <div className="flex flex-col space-y-4">
+                {farkData?.map((fark) => {
+                  return (
+                    <FarkList
+                      id={fark.id}
+                      menu={fark.menu}
+                      status={fark.status}
+                      location={fark.location}
+                      phone={fark.user.phone}
+                      refreshKey={props.refreshKey}
+                      setRefreshKey={props.setRefreshKey}
+                    />
+                  );
+                })}
+              </div>
 
-            <button
-              className="btn md:w-20 h-10 w-[70px] md:right-3 right-4 bg-red-500"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-              type="submit"
-            >
-              close
-            </button>
-          </div>
+              <button
+                className="btn md:w-20 h-10 w-[70px] md:right-3 right-4 bg-red-500"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+                type="submit"
+              >
+                close
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>
