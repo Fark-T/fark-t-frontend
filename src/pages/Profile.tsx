@@ -8,6 +8,7 @@ import {
 import Container from "../layouts/Container";
 import { IconContext } from "react-icons";
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 type MyProfileType = {
   id: string;
