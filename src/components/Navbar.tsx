@@ -6,8 +6,10 @@ import MobileMenu from "./MobileMenu";
 import { MdClose } from "react-icons/md";
 import { MdOutlineAddBusiness } from "react-icons/md";
 import { useAuth } from "../context/AuthContext";
+import { FaUser, FaBitcoin } from "react-icons/fa";
+
 const Navbar = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const navMenu =
     "text-lg font-bold px-2 py-1 transition duration-150 cursor-pointer hover:text-[#1C6758] hover:underline underline-offset-4 decoration-2";
@@ -23,7 +25,7 @@ const Navbar = () => {
     });
   });
   return (
-    <nav className="w-full fixed top-0 left-0 shadow-lg">
+    <nav className="w-full fixed top-0 left-0 shadow-lg z-50">
       <div className="flex justify-between items-center md:px-20 px-5 py-6">
         <div className="flex justify-center items-center space-x-1">
           <span className="text-4xl">
@@ -55,11 +57,22 @@ const Navbar = () => {
               MyFark
             </NavLink>
           </li>
+          <li className="text-lg font-bold py-2 px-3">
+            <div className="flex items-center gap-1">
+            <FaBitcoin />
+            {user?.coin}
+            </div>
+          </li>
+          <li>
+            <NavLink to={"/profile"} className={`${navMenu}`}>
+              <FaUser/>
+            </NavLink>
+          </li>
           <li
             onClick={() => {
               logout();
             }}
-            className="text-lg font-bold py-2 px-3 bg-[#3D8361] rounded-md text-white hover:bg-orange-500"
+            className="text-lg font-bold py-2 px-3 bg-red-500 rounded-md text-white hover:bg-orange-500"
           >
             Logout
           </li>
@@ -75,7 +88,7 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        <MobileMenu open={open} />
+        <MobileMenu open={open}/>
       </div>
     </nav>
   );
