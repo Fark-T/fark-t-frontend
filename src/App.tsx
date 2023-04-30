@@ -1,6 +1,5 @@
 import Order from "./pages/Order";
 import { Route, Routes } from "react-router-dom";
-import { Fragment } from "react";
 import MyOrder from "./pages/MyOrder";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -12,7 +11,6 @@ import axios from "axios";
 import ProtectRoute from "./components/ProtectRoute";
 import Navbar from "./components/Navbar";
 import { useAuth } from "./context/AuthContext";
-
 axios.defaults.baseURL = import.meta.env.VITE_APP_API;
 function App() {
   const { isAuthenticated, isLoading } = useAuth();

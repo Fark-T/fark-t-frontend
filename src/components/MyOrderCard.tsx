@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { FaHamburger } from "react-icons/fa";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { FaHamburger, FaKaaba } from "react-icons/fa";
+import FarkList from "./FarkList";
 
 type MyOrderType = {
   id: string;
@@ -16,10 +18,54 @@ type MyOrderType = {
     phone: string;
     coin: number;
   };
+  refreshKey: number;
+  setRefreshKey: (e: number) => void;
+};
+
+type FarkType = {
+  id: string;
+  menu: string;
+  location: string;
+  status: boolean;
+  user: {
+    id: string;
+    username: string;
+    fname: string;
+    lname: string;
+    phone: string;
+    coin: number;
+  };
+  order: {
+    id: string;
+    restaurant: string;
+    category: string;
+    limit: number;
+    count: number;
+    status: boolean;
+    user: {
+      id: string;
+      username: string;
+      fname: string;
+      lname: string;
+      phone: string;
+      coin: number;
+    };
+  };
 };
 
 const MyOrderCard = (props: MyOrderType) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [farkData, setFarkData] = useState<FarkType[]>();
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get(`/api/fark/eachOrder/${props.id}`);
+        setFarkData(res.data);
+      } catch (error) {}
+    };
+    fetch();
+  }, [props.refreshKey]);
+
   return (
     <>
       <div
@@ -37,32 +83,59 @@ const MyOrderCard = (props: MyOrderType) => {
             {props.category}
           </div>
           <hr className="border-[1.5px]"></hr>
-          <div className="flex justify-between">
-            <div className="font-medium">
-              Amount : {props.count}/{props.limit}
-            </div>
-            <div className="font-medium">
-              {props.status ? "processing" : "waiting"}
-            </div>
+
+          <div className="font-medium">
+            Amount : {props.count}/{props.limit}
           </div>
         </div>
       </div>
 
       <div className={`modal ${isOpen ? "modal-open" : ""}`}>
         <div className="modal-box">
-          <div className="modal-action">
-            <button className="btn btn-success" type="submit">
-              accept
-            </button>
-            <button
-              className="btn btn-error"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              close
-            </button>
-          </div>
+          {props.count == 0 ? (
+            <div className="flex flex-col justify-center items-center space-y-10">
+              <div className="text-2xl">Haven't get an Order Yet</div>
+              <div>
+                <button
+                  className="btn md:w-20 h-10 w-[70px] md:right-3 right-4 bg-red-500"
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                  type="submit"
+                >
+                  close
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="modal-action flex flex-col space-y-5">
+              <div className="flex flex-col space-y-4">
+                {farkData?.map((fark) => {
+                  return (
+                    <FarkList
+                      id={fark.id}
+                      menu={fark.menu}
+                      status={fark.status}
+                      location={fark.location}
+                      phone={fark.user.phone}
+                      refreshKey={props.refreshKey}
+                      setRefreshKey={props.setRefreshKey}
+                    />
+                  );
+                })}
+              </div>
+
+              <button
+                className="btn md:w-20 h-10 w-[70px] md:right-3 right-4 bg-red-500"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+                type="submit"
+              >
+                close
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

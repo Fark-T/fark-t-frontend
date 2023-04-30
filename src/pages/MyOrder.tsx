@@ -23,6 +23,7 @@ type MyOrderType = {
 
 const MyOrder = () => {
   const [orderData, setOrderData] = useState<MyOrderType[]>();
+  const [refreshKey, setRefreshKey] = useState(0);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const MyOrder = () => {
       }
     };
     getMyOrders();
-  }, []);
+  }, [refreshKey, setRefreshKey]);
 
   return (
     <Container>
@@ -59,6 +60,8 @@ const MyOrder = () => {
               count={order.count}
               status={order.status}
               user={order.user}
+              refreshKey={refreshKey}
+              setRefreshKey={setRefreshKey}
             />
           );
         })}

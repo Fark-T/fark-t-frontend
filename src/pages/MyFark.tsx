@@ -41,7 +41,8 @@ const MyFark = () => {
     const fetch = async () => {
       const res = await axios.get(`/api/fark/myfark/${user?.id}`);
       if (res.status === 200) {
-        setFarkData(res.data);
+        console.log(res.data)
+        setFarkData(res.data);  
       }
     };
     fetch();
@@ -56,7 +57,7 @@ const MyFark = () => {
               menu={fark.menu}
               status={fark.status}
               fname={fark.order.user.fname}
-              lname={fark.order.user.fname}
+              lname={fark.order.user.lname}
               phone={fark.order.user.phone}
             />
           );

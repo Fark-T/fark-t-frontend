@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import { MdOutlineDeliveryDining } from "react-icons/md";
 
 type MyFarkType = {
@@ -18,7 +18,7 @@ const FarkCard = ( props : MyFarkType ) => {
         <div className="absolute w-full h-4/5 p-4 pt-8 bottom-0 bg-white rounded-2xl space-y-2">
                   <div className="font-bold text-xl">{ props.menu}</div>
           <div className="font-bold border-2 rounded-2xl w-fit py-1 px-2 text-xs">
-            {props.status}
+            {props.status ? "Processing" : "Waiting"}
           </div>
           <hr className="border-[1.5px]"></hr>
           <div className="flex justify-between">
