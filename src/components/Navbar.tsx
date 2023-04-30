@@ -63,7 +63,7 @@ const Navbar = () => {
             {user?.coin}
             </div>
           </li>
-          <li>
+          <li className="pr-4">
             <NavLink to={"/profile"} className={`${navMenu}`}>
               <FaUser/>
             </NavLink>
