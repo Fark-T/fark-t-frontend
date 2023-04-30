@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import MyFark from "./pages/MyFark";
 import Layout from "./layouts/PageLayout";
 import NewOrder from "./pages/NewOrder";
+import Profile from "./pages/Profile";
 import axios from "axios";
 import ProtectRoute from "./components/ProtectRoute";
 import Navbar from "./components/Navbar";
@@ -57,6 +58,16 @@ function App() {
             <ProtectRoute>
               <MyOrder />
             </ProtectRoute>
+          }
+        />
+        <Route
+
+          path="/profile"
+          element={
+            <ProtectRoute>
+              <Profile />
+            </ProtectRoute>
+
           }
         />
         <Route path="/login" element={<Login />} />
